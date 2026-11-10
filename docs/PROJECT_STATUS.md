@@ -4,7 +4,7 @@ Updated: 10 November 2026. Repository: https://github.com/BhumikaNagpall/AI_Inte
 
 ## Current result
 
-The first text-interview increment is implemented on task branches. It is not yet a fully accepted or deployed MVP. The complete integrated source is on `task/6-integration` once its PR is published. Do not restart from the initial plan or assume main already contains the application.
+The first text-interview increment is implemented on task branches. It is not yet a fully accepted or deployed MVP. The complete integrated source is on `task/6-integration` (PR #16). Do not restart from the initial plan or assume main already contains the application.
 
 Stack: Node.js 24, native HTTP/crypto/SQLite, browser ES modules and CSS. No dependency installation is required. Six rounds, four personas, two target roles. Practice mode works without a paid provider. See ARCHITECTURE.md and API_CONTRACT.md.
 
@@ -29,7 +29,7 @@ Architecture PR #12 was reviewed and merged. Main at that checkpoint: `c74a7956b
 | #13 | task/4-interview-engine | main | Engine and catalogue; open, reviewed locally |
 | #14 | task/3-backend | task/4-interview-engine | Auth/storage/recovery; open, reviewed locally |
 | #15 | task/2-frontend | task/3-backend | UI; draft pending authenticated browser acceptance |
-| Integration PR (look up by branch) | task/6-integration | task/2-frontend | Independent tests, setup/CI, fixes and this handoff |
+| #16 | task/6-integration | task/2-frontend | Independent tests, setup/CI, fixes and this handoff |
 
 These are stacked PRs. If merging an earlier PR, retarget its successor appropriately and verify its diff; do not squash/rebase the stack blindly.
 
@@ -61,7 +61,9 @@ Agent execution is not ongoing after the handoff. New continuation work should r
 - `git diff --check`: passed.
 - Browser: sign-in screen rendered correctly at desktop size in managed preview. No authenticated browser flow or mobile interaction was completed.
 - Preview startup: confirmed after supporting --host/--port. Preview is temporary QA infrastructure, not production hosting.
-- CI workflow pins verified actions/checkout and actions/setup-node v7 commit hashes; CI execution must be checked on the published integration PR. Do not assume it has passed merely because local tests did.
+- CI workflow pins verified actions/checkout and actions/setup-node v7 commit hashes; GitHub Actions run 42817468203 passed on both Ubuntu and Windows for code commit 08f5b669e5f3958caf95504ae0669a9934959308. This subsequent handoff edit changes documentation only. Check the latest run before merging.
+- Published integration code commit: `08f5b669e5f3958caf95504ae0669a9934959308`. PR #16: https://github.com/BhumikaNagpall/AI_Interview/pull/16.
+- Temporary preview was stopped after QA; it is not a persistent user-facing deployment.
 
 ## Remaining acceptance / limitations
 
