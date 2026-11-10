@@ -2,50 +2,85 @@
 
 Updated: 10 November 2026. Repository: https://github.com/BhumikaNagpall/AI_Interview
 
-## Scope
+## Current result
 
-B.Tech CSE/AI-ML; two roles; six interview rounds; four personas. See AI_Interview_Architecture_and_Plan.md, ARCHITECTURE.md and API_CONTRACT.md.
+The first text-interview increment is implemented on task branches. It is not yet a fully accepted or deployed MVP. The complete integrated source is on `task/6-integration` once its PR is published. Do not restart from the initial plan or assume main already contains the application.
 
-## Completed
+Stack: Node.js 24, native HTTP/crypto/SQLite, browser ES modules and CSS. No dependency installation is required. Six rounds, four personas, two target roles. Practice mode works without a paid provider. See ARCHITECTURE.md and API_CONTRACT.md.
 
-- Verified repository was empty.
-- Saved agreed plan in repository initial commit `1a0409732feb642e57a49be5674ebf842b1acc12`.
-- Created issues #1–#11 with priorities, dependencies and acceptance criteria.
-- Established Node.js 24 / native HTTP / SQLite / browser ES module architecture and shared API contract.
-- Created isolated task branches/worktrees and launched actual agents below.
+## Completed implementation
 
-## Active agents
+- Account registration, login/logout, scrypt password hashing, expiring hashed session tokens and HttpOnly cookies.
+- Private SQLite interview persistence, owner checks, bounded inputs, origin checks and per-session concurrency guards.
+- Guided questions for six rounds, all difficulty/personality/role combinations, and answer-dependent follow-ups.
+- Optional server-side AI adapter with bounded responses/timeouts, output validation, quoted answer evidence, pinned session mode and no silent fallback.
+- Dashboard, setup, text-context import, interview/retry screens, report/history/deletion UI and review-only coding textarea.
+- Answer persistence before follow-up generation; identical retries do not duplicate answers.
+- Setup instructions, example environment, CI and production guidance.
+- Corrected example environment: AI_BASE_URL is blank so copying it does not break practice mode.
+- Corrected server startup to accept preview --host/--port arguments; replaced unverified “AI connected” UI claim with “AI mode”.
 
-| Agent | Responsibility | Branch | Status |
+## GitHub tracking
+
+Architecture PR #12 was reviewed and merged. Main at that checkpoint: `c74a7956b2f773b70d2bc12595700b67fd7d3c0c`.
+
+| PR | Branch | Base | Scope / state at checkpoint |
 | --- | --- | --- | --- |
-| /root | Lead architect, integration, publishing | task/1-architecture | In progress |
-| /root/architecture_review | Independent architecture review | Read-only | Reviewing |
-| /root/frontend | Dashboard, setup, interview, reports/history | task/2-frontend | Implementing |
-| /root/backend | Authentication, ownership, persistent sessions | task/3-backend | Implementing |
-| /root/ai_engine | Catalogue, personas, provider and practice engine | task/4-interview-engine | Implementing |
-| /root/qa | Independent acceptance tests and review | task/9-qa | Implementing |
-| /root/devops | Setup, CI and deployment documentation | task/10-devops | Implementing |
+| #13 | task/4-interview-engine | main | Engine and catalogue; open, reviewed locally |
+| #14 | task/3-backend | task/4-interview-engine | Auth/storage/recovery; open, reviewed locally |
+| #15 | task/2-frontend | task/3-backend | UI; draft pending authenticated browser acceptance |
+| Integration PR (look up by branch) | task/6-integration | task/2-frontend | Independent tests, setup/CI, fixes and this handoff |
 
-## Issue map
+These are stacked PRs. If merging an earlier PR, retarget its successor appropriately and verify its diff; do not squash/rebase the stack blindly.
 
-#1 Architecture; #2 Dashboard/setup; #3 Auth/storage; #4 Engine/provider; #5 Questions/rubrics; #6 Interview integration; #7 Reports/history; #8 Coding/execution; #9 QA; #10 Setup/CI/deployment; #11 Handoff.
+Issue map: #1 architecture (completed via #12); #2 dashboard/setup; #3 auth/storage; #4 engine/provider; #5 questions/rubrics; #6 integration; #7 reports/history; #8 coding/execution; #9 QA; #10 setup/CI/deployment; #11 handoff. Open issues remain open until their full acceptance criteria are verified. A code editor alone does not close #8.
 
-## Verification
+## Actual agent work
 
-No implementation tests have run at this checkpoint. Repository read access and issue/file creation succeeded. Git CLI clone works; Git CLI push lacks credentials, so authenticated connector operations will publish branches and PRs.
+| Agent | Delivered work | Local source commit |
+| --- | --- | --- |
+| backend | Auth, persistence, concurrency/retries, seven tests | f936f63 |
+| ai_engine | Engine, question bank and fourteen tests | 722e94e |
+| qa | Five independent API acceptance tests and review | 07882c2 |
+| devops | README, environment example, CI and deployment guide | 611c1d1 |
+| architecture_review | Read-only review; auth routes, retry semantics and mutation locking clarified | No code commit |
+| original frontend | Uncommitted UI files survived interrupted turn | Continued below |
+| frontend_finish | Recovered UI, repaired interrupted syntax and saved-answer retry state | 85e669a |
+| integration_review | Read-only review caught broken example environment and inaccurate AI badge | Fixed by lead |
+| root | Architecture, integration, additional tests, preview fix, publishing and handoff | task/6-integration |
 
-## Open limitations
+Agent execution is not ongoing after the handoff. New continuation work should reuse these artifacts, not assume old agents are still running. GitHub connector publication produces different remote commit IDs from local source commits; use remote branch heads when merging.
 
-- No AI provider key/model supplied; do not claim live AI tests.
-- No isolated code runner configured; initial editor is review-only.
-- No production deployment performed.
-- PDF/DOCX resume parsing is outside this increment; text context supported.
+## Verification evidence
 
-## Next steps
+- `npm test`: 28 tests passed, zero failures. Breakdown: 7 backend + 5 independent acceptance + 14 engine + 2 integration/configuration tests.
+- All six rounds completed through the real practice engine and HTTP API, including automatic completion and saved reflection reports.
+- Engine matrix covers two roles × six rounds × four personas × three difficulties.
+- Provider tests use mocks: failures, malformed/truncated/oversized responses, invented evidence and missing configuration are rejected.
+- `npm run check`: passed JavaScript syntax checks.
+- `git diff --check`: passed.
+- Browser: sign-in screen rendered correctly at desktop size in managed preview. No authenticated browser flow or mobile interaction was completed.
+- Preview startup: confirmed after supporting --host/--port. Preview is temporary QA infrastructure, not production hosting.
+- CI workflow pins verified actions/checkout and actions/setup-node v7 commit hashes; CI execution must be checked on the published integration PR. Do not assume it has passed merely because local tests did.
 
-1. Collect agent commits and review integration against the shared contract.
-2. Run automated tests and available browser QA; fix observed defects.
-3. Publish task branches and linked PRs with actual checks.
-4. Update this document with exact PR/commit/test results and remaining blockers before handoff.
+## Remaining acceptance / limitations
 
-Never save credentials in this file. On continuation, read it and verify repository/branch state; do not repeat completed work without reason.
+1. Authenticated browser acceptance: register/login, setup, submit/retry, refresh/resume, finish/report, history/delete and mobile/keyboard checks. API tests are not equivalent to browser tests.
+2. Real AI validation needs privately supplied AI_API_KEY and AI_MODEL configuration. No key was supplied, no paid call made, no live-model quality claim.
+3. Isolated code execution is unimplemented (#8). Code is never executed on the application server.
+4. Production deployment, HTTPS, backups and operating configuration remain unverified (#10).
+5. Text context only (.txt/paste); PDF/DOCX parsing, voice and group discussion remain future scope.
+6. One server process only: locks/rate limits are in memory. Password reset, email verification and account deletion are not yet implemented.
+
+## Exact next steps
+
+1. Read this file and inspect remote PR/branch status; local and remote commit hashes differ due to connector publishing.
+2. Check CI on the integration PR and fix actual failures.
+3. Complete authenticated UI acceptance through an authorised test sign-in; browser credential guidance prevented automatic model-visible credential entry, so the lead did not bypass authentication or alter the app to skip it.
+4. Configure/test a real AI provider privately when available. Never put keys in chat, commits, issues or handoff notes.
+5. Review and merge accepted changes in stack order; leave incomplete features tracked.
+6. Select an isolated code runner and production hosting based on user budget before wider release.
+
+## Local continuation paths
+
+Primary checkout: `/workspace/scratch/cbc26be325b6/AI_Interview` on `task/6-integration`. Sibling task worktrees remain for backend, engine, frontend, QA and DevOps. Git clone/read works; CLI push lacked authentication, so publish through the connected GitHub tools. No credentials were committed.
