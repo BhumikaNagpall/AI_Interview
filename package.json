@@ -1,0 +1,1 @@
+{"name":"ai-interview","version":"0.1.0","private":true,"type":"module","engines":{"node":">=24.0.0"},"scripts":{"start":"node --env-file-if-exists=.env server/index.js","test":"node --test tests/*.test.js","check":"node --check server/index.js && node --check server/app.js && node --check server/engine.js && node --check public/app.js"}}
